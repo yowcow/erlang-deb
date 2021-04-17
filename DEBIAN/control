@@ -1,0 +1,5 @@
+Package: erlang
+Version: {{PKG_VER}}
+Architecture: {{ARCH}}
+Maintainer: Yoko OYAMA <yowcow@gmail.com>
+Description: Erlang OTP.
