@@ -1,6 +1,6 @@
-PKGNAME := erlang
+PKGNAME := yowcow-erlang
 PKGVERSION := 23.3.1
-PKGRELEASE := 2
+PKGRELEASE := 3
 ARCH := amd64
 
 URL := https://github.com/erlang/otp
@@ -35,6 +35,7 @@ $(SOURCEDIR)/$(ARTIFACT):
 			--pkgrelease $(PKGRELEASE) \
 			--arch $(ARCH) \
 			--pkgsource $(URL) \
+			--conflicts erlang \
 			-y \
 			make install
 
