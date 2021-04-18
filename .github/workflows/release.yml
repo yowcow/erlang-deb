@@ -16,7 +16,9 @@ jobs:
       - name: install packages
         run: sudo apt-get install -yq build-essential git autoconf autoconf libncurses-dev libssh-dev checkinstall
       - name: build a deb package
-        run: make all build
+        run: |
+          make all
+          sudo make build
       - name: upload artifact
         uses: softprops/action-gh-release@v1
         with:
