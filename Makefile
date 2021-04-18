@@ -1,40 +1,47 @@
-REPOSITORY := https://github.com/erlang/otp.git
-VERSION := 23.3.1
-TAG := OTP-$(VERSION)
-
-PKG_VER := $(VERSION)-1
+PKGNAME := erlang
+PKGVERSION := 23.3.1
+PKGRELEASE := 2
 ARCH := amd64
-ARTIFACT := erlang_$(PKG_VER)_$(ARCH)
 
-all: $(ARTIFACT)/usr $(ARTIFACT)/DEBIAN/control
+URL := https://github.com/erlang/otp
+PKGSOURCE := https://github.com/erlang/otp.git
+TAG := OTP-$(PKGVERSION)
+SOURCEDIR := $(PKGNAME)_$(PKGVERSION)
 
-$(ARTIFACT)/DEBIAN/control: DEBIAN/control $(ARTIFACT)/DEBIAN
-	cat $< \
-		| sed 's/{{PKG_VER}}/$(PKG_VER)/g' \
-		| sed 's/{{ARCH}}/$(ARCH)/g' \
-		> $@
+ARTIFACT := $(PKGNAME)_$(PKGVERSION)-$(PKGRELEASE)_$(ARCH).deb
 
-$(ARTIFACT)/%:
-	mkdir -p $@
+all: $(SOURCEDIR)
+	cd $< && \
+		./otp_build autoconf && \
+		./configure --prefix=/usr && \
+		make
 
-build:
-	$(MAKE) build-src
-	$(MAKE) build-deb
+$(SOURCEDIR):
+	git clone -b $(TAG) --depth 1 -- $(PKGSOURCE) $@
 
-build-src: $(TAG)
-	cd $< \
-		&& ./otp_build autoconf \
-		&& ./configure --prefix=$(abspath $(ARTIFACT)/usr) \
-		&& $(MAKE) all install
+build: $(ARTIFACT)
 
-$(TAG):
-	git clone -b $(TAG) --depth 1 -- $(REPOSITORY) $@
+$(ARTIFACT): $(SOURCEDIR)/$(ARTIFACT)
+	mv $< $@
 
-build-deb:
-	dpkg-deb --build --root-owner-group $(ARTIFACT)
+$(SOURCEDIR)/$(ARTIFACT):
+	cd $(dir $@) && \
+		checkinstall \
+			-D \
+			--maintainer yowcow@gmail.com \
+			--summary "Erlang OTP" \
+			--pkgname $(PKGNAME) \
+			--pkgversion $(PKGVERSION) \
+			--pkgrelease $(PKGRELEASE) \
+			--arch $(ARCH) \
+			--pkgsource $(URL) \
+			-y \
+			make install
 
 clean:
-	$(MAKE) -C $(TAG) clean
+	rm -rf $(SOURCEDIR)
 
 realclean: clean
-	rm -rf OTP-*
+	rm -rf *.deb
+
+.PHONY: all build clean realclean

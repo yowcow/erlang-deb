@@ -1,4 +1,4 @@
-IMAGE := yowcow/erlang-ubuntu
+IMAGE := yowcow/ubuntu-erlang-build
 
 all:
 	docker build -t $(IMAGE) .

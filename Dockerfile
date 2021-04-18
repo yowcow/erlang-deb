@@ -9,4 +9,5 @@ RUN set -eux; \
         git \
         autoconf \
         libncurses-dev \
-        libssl-dev
+        libssl-dev \
+        checkinstall
