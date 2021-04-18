@@ -14,7 +14,7 @@ jobs:
       - name: update apt
         run: sudo apt-get update
       - name: install packages
-        run: sudo apt-get install -yq build-essential git autoconf autoconf libncurses-dev libssh-dev
+        run: sudo apt-get install -yq build-essential git autoconf autoconf libncurses-dev libssh-dev checkinstall
       - name: build a deb package
         run: make all build
       - name: upload artifact
