@@ -1,5 +1,5 @@
 PKGNAME := yowcow-erlang
-PKGVERSION := 24.0.6
+PKGVERSION := 24.1.4
 PKGRELEASE := 1
 ARCH := amd64
 
@@ -10,11 +10,12 @@ SOURCEDIR := $(PKGNAME)_$(PKGVERSION)
 
 ARTIFACT := $(PKGNAME)_$(PKGVERSION)-$(PKGRELEASE)_$(ARCH).deb
 
+all: JOBS := $(shell grep -c '^processor\>' /proc/cpuinfo)
 all: $(SOURCEDIR)
 	cd $< && \
 		./otp_build autoconf && \
 		./configure --prefix=/usr && \
-		make
+		make -j $(JOBS)
 
 $(SOURCEDIR):
 	git clone -b $(TAG) --depth 1 -- $(PKGSOURCE) $@
