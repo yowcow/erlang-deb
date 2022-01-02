@@ -1,6 +1,7 @@
 IMAGE := yowcow/ubuntu-erlang-build
 
 all:
+	docker pull ubuntu:latest
 	docker build -t $(IMAGE) .
 
 build:
