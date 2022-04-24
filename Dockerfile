@@ -10,4 +10,5 @@ RUN set -eux; \
         autoconf \
         libncurses-dev \
         libssl-dev \
+        lsb-release \
         checkinstall
