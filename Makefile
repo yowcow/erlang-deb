@@ -1,13 +1,13 @@
 PKGNAME := yowcow-erlang
 PKGVERSION := 24.3.3
-PKGRELEASE := 2
+PKGRELEASE := 3
 ARCH := amd64
 
 REPOSITORY := https://github.com/erlang/otp.git
 TAG := OTP-$(PKGVERSION)
 
 PACKAGE := $(PKGNAME)_ubuntu$(shell lsb_release -r -s)_$(PKGVERSION)
-SOURCE_DIR := $(PACKAGE)-src
+SOURCE_DIR := src/$(PACKAGE)
 ARTIFACT_DIR := $(abspath $(PACKAGE)-$(PKGRELEASE)_$(ARCH))
 ARTIFACT := $(ARTIFACT_DIR).deb
 
@@ -15,6 +15,7 @@ all: JOBS := $(shell grep -c '^processor\>' /proc/cpuinfo)
 all: $(SOURCE_DIR)
 
 $(SOURCE_DIR):
+	mkdir -p $(dir $@)
 	git clone -b $(TAG) --depth 1 -- $(REPOSITORY) $@
 
 build: $(ARTIFACT)

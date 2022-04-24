@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:21.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -10,5 +10,4 @@ RUN set -eux; \
         autoconf \
         libncurses-dev \
         libssl-dev \
-        lsb-release \
-        checkinstall
+        lsb-release
