@@ -28,4 +28,6 @@ jobs:
       #  env:
       #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: mock artifact
-        run: echo hello > test-$(lsb_release -r -s).txt
+        run: echo hello > test-artifact-$(lsb_release -r -s).txt
+      - name: check artifact
+        run: find . -type f -name 'test-artifact-*.txt'
