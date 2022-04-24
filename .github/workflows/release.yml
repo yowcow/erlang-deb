@@ -1,33 +1,30 @@
 name: release
 
-on:
-  push:
-    tags:
-      - '*'
+on: [push]
 
 jobs:
   release:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:
-          - ubuntu-21.10
-          - ubuntu-22.04
+        os: [ubuntu-21.10, ubuntu-22.04]
     steps:
       - name: checkout
         uses: actions/checkout@v2
       - name: update apt
         run: sudo apt-get update
       - name: install packages
-        run: sudo apt-get install -yq build-essential git autoconf autoconf libncurses-dev libssh-dev checkinstall
-      - name: build a deb package
-        run: |
-          make all
-          sudo make build
-      - name: upload artifact
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            yowcow-erlang_*.deb
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sudo apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
+      #- name: build a deb package
+      #  run: |
+      #    make all
+      #    sudo make build
+      #- name: upload artifact
+      #  uses: softprops/action-gh-release@v1
+      #  with:
+      #    files: |
+      #      yowcow-erlang_*.deb
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: mock artifact
+        run: echo hello > test-$(lsb_release -r -s).txt
