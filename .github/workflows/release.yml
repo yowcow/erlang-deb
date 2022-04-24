@@ -5,8 +5,13 @@ on: [push]
 jobs:
   release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        container:
+          - ubuntu:21.10
+          - ubuntu:22.04
     container:
-      image: ubuntu:22.04
+      image: ${{ matrix.container }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -14,18 +19,13 @@ jobs:
         run: apt-get update
       - name: install packages
         run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
-      #- name: build a deb package
-      #  run: |
-      #    make all
-      #    sudo make build
-      #- name: upload artifact
-      #  uses: softprops/action-gh-release@v1
-      #  with:
-      #    files: |
-      #      yowcow-erlang_*.deb
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: mock artifact
-        run: echo hello > test-artifact-$(lsb_release -r -s).txt
-      - name: check artifact
-        run: find . -type f -name 'test-artifact-*.txt'
+      - name: build a deb package
+        run: |
+          make all build
+      - name: upload artifact
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            yowcow-erlang_*.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
