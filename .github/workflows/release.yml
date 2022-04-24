@@ -11,9 +11,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: update apt
-        run: sudo apt-get update
+        run: apt-get update
       - name: install packages
-        run: sudo apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
+        run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
       #- name: build a deb package
       #  run: |
       #    make all
