@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Update APT
         run: apt-get update
-      - name: install packages
+      - name: Install APT Packages
         run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
       - name: Build a DEB Package
         run: make all build
