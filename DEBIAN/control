@@ -1,6 +1,7 @@
 Package: yowcow-erlang
-Version: {{PKG_VER}}
-Architecture: {{ARCH}}
-Conflicts: erlang
-Maintainer: Yoko OYAMA <yowcow@gmail.com>
+Name: yowcow-erlang
 Description: Erlang OTP.
+Maintainer: Yoko OYAMA <yowcow@gmail.com>
+Version: {{PKGVERSION}}-{{PKGRELEASE}}
+Conflicts: erlang
+Architecture: {{ARCH}}
