@@ -15,22 +15,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-
       - name: update apt
         run: apt-get update
-
       - name: install packages
         run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
-
       - name: build a deb package
-        run: |
-          make all build
-
+        run: make all build
       - name: Upload files to a GitHub release
         uses: svenstaro/upload-release-action@2.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: *.deb
-          file_glob: true
+          file: yowcow-erlang_*.deb
           tag: ${{ github.ref }}
-
+          file_glob: true
