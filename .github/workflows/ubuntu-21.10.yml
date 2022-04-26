@@ -1,0 +1,26 @@
+on: [push]
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:21.10
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: update apt
+        run: apt-get update
+      - name: install packages
+        run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
+      - name: build a deb package
+        run: make all build
+      - name: Upload files to a GitHub release
+        uses: svenstaro/upload-release-action@2.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: yowcow-erlang_ubuntu21.10_*.deb
+          tag: ${{ github.ref }}
+          file_glob: true
