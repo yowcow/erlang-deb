@@ -1,5 +1,3 @@
-name: release
-
 on: [push]
 
 env:
@@ -8,13 +6,8 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        container:
-          - ubuntu:21.10
-          - ubuntu:22.04
     container:
-      image: ${{ matrix.container }}
+      image: ubuntu:21.10
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -28,6 +21,6 @@ jobs:
         uses: svenstaro/upload-release-action@2.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: yowcow-erlang_*.deb
+          file: yowcow-erlang_ubuntu21.10_*.deb
           tag: ${{ github.ref }}
           file_glob: true
