@@ -10,7 +10,7 @@ jobs:
       image: ubuntu:21.10
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Update APT
         run: apt-get update
       - name: Install APT Packages
