@@ -18,4 +18,7 @@ shell:
 		-w /work \
 		$(IMAGE) bash
 
-.PHONY: all build shell
+clean:
+	docker rmi $(IMAGE)
+
+.PHONY: all build shell clean

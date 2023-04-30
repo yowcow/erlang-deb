@@ -7,7 +7,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:22.10
+      image: ubuntu:23.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
