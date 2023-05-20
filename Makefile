@@ -1,5 +1,5 @@
 PKGNAME := yowcow_erlang
-PKGVERSION := 25.3.2
+PKGVERSION := 26.0
 PKGRELEASE := 1
 ARCH := amd64
 
