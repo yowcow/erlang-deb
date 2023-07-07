@@ -1,4 +1,4 @@
-TAG := 22.04
+TAG := 23.04
 DOCKERFILE := ubuntu-$(TAG).Dockerfile
 IMAGE := yowcow/erlang-build:ubuntu-$(TAG)
 
