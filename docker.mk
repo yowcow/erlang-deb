@@ -2,9 +2,9 @@ TAG := 23.04
 DOCKERFILE := ubuntu-$(TAG).Dockerfile
 IMAGE := yowcow/erlang-build:ubuntu-$(TAG)
 
-all:
+all: $(DOCKERFILE)
 	docker pull ubuntu:$(TAG)
-	cat $(DOCKERFILE) | docker build -t $(IMAGE) -
+	cat $< | docker build -t $(IMAGE) -
 
 build:
 	docker run --rm -it \
