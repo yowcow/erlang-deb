@@ -1,5 +1,5 @@
 TAG := 23.04
-DOCKERFILE := ubuntu-$(TAG).Dockerfile
+DOCKERFILE := Dockerfile.ubuntu-$(TAG)
 IMAGE := yowcow/erlang-build:ubuntu-$(TAG)
 
 all: $(DOCKERFILE)
