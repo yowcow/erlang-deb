@@ -1,6 +1,6 @@
 PKGNAME := yowcow_erlang
 PKGVERSION := 26.1.1
-PKGRELEASE := 1
+PKGRELEASE := 2
 ARCH := amd64
 
 REPOSITORY := https://github.com/erlang/otp.git
