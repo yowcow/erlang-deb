@@ -6,9 +6,13 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: CPU
+        run: lscpu
       - name: Build
         run: make UBUNTU_RELEASE=22.04 all build
       - name: GH Release
@@ -16,4 +20,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            dist/*.deb
+            otp/*.deb
