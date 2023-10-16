@@ -6,17 +6,11 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:23.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Update APT
-        run: apt-get update
-      - name: Install APT Packages
-        run: apt-get install -yq build-essential git autoconf libncurses-dev libssl-dev lsb-release
-      - name: Build a DEB Package
-        run: make all build
+      - name: Build
+        run: make UBUNTU_RELEASE=23.04 all build
       - name: GH Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
