@@ -1,4 +1,4 @@
-UBUNTU_RELEASE = 22.04
+UBUNTU_RELEASE = 23.10
 DOCKER_IMAGE = yowcow/erlang-build:ubuntu-$(UBUNTU_RELEASE)
 
 all: Dockerfile
