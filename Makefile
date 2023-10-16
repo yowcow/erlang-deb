@@ -1,46 +1,29 @@
-PKGNAME := yowcow_erlang
-PKGVERSION := 26.1.1
-PKGRELEASE := 2
-ARCH := amd64
+UBUNTU_RELEASE = 22.04
+DOCKER_IMAGE = yowcow/erlang-build:ubuntu-$(UBUNTU_RELEASE)
 
-REPOSITORY := https://github.com/erlang/otp.git
-TAG := OTP-$(PKGVERSION)
+all: Dockerfile
+	docker build \
+		--build-arg="UBUNTU_RELEASE=$(UBUNTU_RELEASE)" \
+		-t $(DOCKER_IMAGE) \
+		-f $< \
+		.
 
-SOURCE_DIR := src/$(PKGNAME)-$(PKGVERSION)
-ARTIFACT_DIR := $(abspath dist/$(PKGNAME)-$(PKGVERSION)-$(PKGRELEASE).ubuntu$(shell lsb_release -r -s).$(ARCH))
-ARTIFACT := $(ARTIFACT_DIR).deb
-
-all: JOBS := $(shell grep -c '^processor\>' /proc/cpuinfo)
-all: $(SOURCE_DIR)
-	cd $< \
-		&& ./configure --prefix=/usr \
-		&& make -j $(JOBS)
-
-$(SOURCE_DIR):
-	mkdir -p $(dir $@)
-	git clone -b $(TAG) --depth 1 -- $(REPOSITORY) $@
-
-build: $(ARTIFACT)
-
-$(ARTIFACT): $(ARTIFACT_DIR) $(ARTIFACT_DIR)/DEBIAN/control
-	dpkg-deb --build $<
-
-$(ARTIFACT_DIR): $(SOURCE_DIR)
-	cd $< \
-		&& make DESTDIR=$@ install
-
-$(ARTIFACT_DIR)/DEBIAN/%: ./DEBIAN/%
-	mkdir -p $(dir $@)
-	cat $< \
-		| sed -e 's/{{PKGVERSION}}/$(PKGVERSION)/g' \
-		| sed -e 's/{{PKGRELEASE}}/$(PKGRELEASE)/g' \
-		| sed -e 's/{{ARCH}}/$(ARCH)/g' \
-		> $@
+build:
+	docker run --rm \
+		-v `pwd`/otp:/app:rw \
+		-w /app \
+		$(DOCKER_IMAGE) make all build
 
 clean:
-	rm -rf dist
+	docker run --rm \
+		-v `pwd`/otp:/app:rw \
+		-w /app \
+		$(DOCKER_IMAGE) make clean
 
-realclean: clean
-	rm -rf src
+shell:
+	docker run --rm -it \
+		-v `pwd`/otp:/app:rw \
+		-w /app \
+		$(DOCKER_IMAGE) bash
 
-.PHONY: all build clean realclean
+.PHONY: all build clean shell
