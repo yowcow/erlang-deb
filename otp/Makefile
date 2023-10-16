@@ -1,5 +1,5 @@
 PKGVERSION = 26.1.1
-PKGRELEASE = 2
+PKGRELEASE = 3
 UBUNTU_RELEASE = $(shell lsb_release -sr)
 PROCESSOR = $(shell uname -p)
 
